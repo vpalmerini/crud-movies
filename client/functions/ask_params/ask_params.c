@@ -19,6 +19,10 @@ void ask_params(FILE *fp, int op, packet *packet, int field_size)
         packet->op = 3;
         delete_movie(fp, packet, field_size);
         break;
+    case 4:
+        packet->op = 4;
+        retrieve_movie(fp, packet, field_size);
+        break;
     default:
         printf("Operação inválida!\n");
         break;

@@ -6,5 +6,6 @@ void list_operations()
     printf("1. Listar Filmes\n");
     printf("2. Adicionar Filme\n");
     printf("3. Remover Filme\n");
+    printf("4. Retornar Filme\n");
     printf("0. Encerrar Programa\n");
 }

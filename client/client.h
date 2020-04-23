@@ -12,6 +12,7 @@
 #include "functions/get_operation/get_operation.h"
 #include "functions/list_operations/list_operations.h"
 #include "functions/delete_movie/delete_movie.h"
+#include "functions/retrieve_movie/retrieve_movie.h"
 
 #include "../wrappers/socket/socket.h"
 #include "../wrappers/writen/writen.h"
