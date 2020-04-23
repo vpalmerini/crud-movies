@@ -9,6 +9,7 @@ gcc client/functions/get_operation/get_operation.c -o client/functions/get_opera
 gcc client/functions/list_operations/list_operations.c -o client/functions/list_operations/list_operations.o -c
 gcc client/functions/delete_movie/delete_movie.c -o client/functions/delete_movie/delete_movie.o -c
 gcc client/functions/retrieve_movie/retrieve_movie.c -o client/functions/retrieve_movie/retrieve_movie.o -c
+gcc client/functions/retrieve_title/retrieve_title.c -o client/functions/retrieve_title/retrieve_title.o -c
 
 gcc wrappers/socket/socket.c -o wrappers/socket/socket.o -c
 gcc wrappers/writen/writen.c -o wrappers/writen/writen.o -c
@@ -30,4 +31,5 @@ gcc -o bin/client client/client.o \
                   client/functions/get_operation/get_operation.o \
                   client/functions/list_operations/list_operations.o \
                   client/functions/delete_movie/delete_movie.o \
-                  client/functions/retrieve_movie/retrieve_movie.o
+                  client/functions/retrieve_movie/retrieve_movie.o \
+                  client/functions/retrieve_title/retrieve_title.o

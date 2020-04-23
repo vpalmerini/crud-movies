@@ -5,6 +5,7 @@
         "stdlib.h": "c",
         "client.h": "c",
         "packet.h": "c",
-        "delete_movie.h": "c"
+        "delete_movie.h": "c",
+        "retrieve_title.h": "c"
     }
 }
