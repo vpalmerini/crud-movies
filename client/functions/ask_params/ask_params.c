@@ -16,8 +16,8 @@ void ask_params(FILE *fp, int op, packet *packet, int field_size)
         add_movie(fp, packet, field_size);
         break;
     case 3:
-        printf("Entre com o nome do filme a ser removido\n");
         packet->op = 3;
+        delete_movie(fp, packet, field_size);
         break;
     default:
         printf("Operação inválida!\n");
