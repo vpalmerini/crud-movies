@@ -10,6 +10,11 @@
 #include "../wrappers/inet_pton/inet_pton.h"
 #include "../wrappers/connect/connect.h"
 
+#include "../serializers/serialize_int/serialize_int.h"
+#include "../serializers/serialize_char/serialize_char.h"
+#include "../serializers/deserialize_int/deserialize_int.h"
+#include "../serializers/deserialize_char/deserialize_char.h"
+
 typedef struct packet
 {
     int op;
