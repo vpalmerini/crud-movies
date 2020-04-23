@@ -5,6 +5,13 @@
 #define SA struct sockaddr
 #define stdin stdin
 
+#include "functions/packet.h"
+
+#include "functions/add_movie/add_movie.h"
+#include "functions/ask_params/ask_params.h"
+#include "functions/get_operation/get_operation.h"
+#include "functions/list_operations/list_operations.h"
+
 #include "../wrappers/socket/socket.h"
 #include "../wrappers/writen/writen.h"
 #include "../wrappers/inet_pton/inet_pton.h"
@@ -14,13 +21,3 @@
 #include "../serializers/serialize_char/serialize_char.h"
 #include "../serializers/deserialize_int/deserialize_int.h"
 #include "../serializers/deserialize_char/deserialize_char.h"
-
-typedef struct packet
-{
-    int op;
-    int movie_id;
-    char *movie_title;
-    char *movie_sinopsis;
-    char *movie_genre;
-    char *rooms;
-} packet;
