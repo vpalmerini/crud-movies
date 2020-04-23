@@ -9,5 +9,6 @@ void list_operations()
     printf("4. Retornar Filme\n");
     printf("5. Retornar Título do Filme\n");
     printf("6. Listar Filmes de um determinado gênero\n");
+    printf("7. Listar Filmes (apenas Título e Salas)\n");
     printf("0. Encerrar Programa\n");
 }
