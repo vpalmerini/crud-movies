@@ -6,6 +6,7 @@
         "client.h": "c",
         "packet.h": "c",
         "delete_movie.h": "c",
-        "retrieve_title.h": "c"
+        "retrieve_title.h": "c",
+        "list_operations.h": "c"
     }
 }

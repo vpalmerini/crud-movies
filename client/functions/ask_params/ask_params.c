@@ -27,6 +27,10 @@ void ask_params(FILE *fp, int op, packet *packet, int field_size)
         packet->op = 5;
         retrieve_title(fp, packet, field_size);
         break;
+    case 6:
+        packet->op = 6;
+        list_by_genre(fp, packet, field_size);
+        break;
     default:
         printf("Operação inválida!\n");
         break;
