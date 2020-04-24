@@ -8,7 +8,7 @@ ssize_t Writen(int sock_fd, const void *buf, size_t n)
 
     if ((number = write(sock_fd, buf, n)) < 0)
     {
-        printf("Error on writing response\n");
+        printf("Error on writing data to socket\n");
         exit(0);
     }
 

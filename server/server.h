@@ -1,5 +1,12 @@
-#ifndef SERVER_H
-#define SERVER_H
+#define MAXLINE 4096
+#define OPERATION 32
+#define FIELD 256
+#define ROOMS 20
+#define LISTENQ 1024
+#define SA struct sockaddr
+#define stdin stdin
+
+#include "functions/packet.h"
 
 #include "../wrappers/socket/socket.h"
 #include "../wrappers/bind/bind.h"
@@ -8,8 +15,7 @@
 #include "../wrappers/close/close.h"
 #include "../wrappers/writen/writen.h"
 
-#define SA struct sockaddr
-#define LISTENQ 1024
-#define MAXLINE 4096
-
-#endif
+#include "../serializers/serialize_int/serialize_int.h"
+#include "../serializers/serialize_char/serialize_char.h"
+#include "../serializers/deserialize_int/deserialize_int.h"
+#include "../serializers/deserialize_char/deserialize_char.h"
