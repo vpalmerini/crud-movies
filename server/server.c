@@ -10,6 +10,7 @@
 
 unsigned char *deserialize_packet(unsigned char *buffer, packet *packet, int field_size);
 void receive_data(int sock_fd, int buffer_size, packet *packet, int field_size);
+void Print_packet(packet *packet);
 
 int main(int argc, char **argv)
 {
@@ -75,6 +76,7 @@ again:
     while ((n = read(sock_fd, buffer, buffer_size)) > 0)
     {
         deserialize_packet(buffer, packet, field_size);
+        Print_packet(packet);
     }
 
     if (n < 0 && errno == EINTR)
@@ -99,4 +101,14 @@ unsigned char *deserialize_packet(unsigned char *buffer, packet *packet, int fie
     buffer = deserialize_char(buffer, packet->rooms, field_size);
 
     return buffer;
+}
+
+void Print_packet(packet *packet)
+{
+    printf("Operation: %d\n", packet->op);
+    printf("Movie ID: %d\n", packet->movie_id);
+    printf("Movie Title: %s", packet->movie_title);
+    printf("Movie Genre: %s", packet->movie_genre);
+    printf("Movie Sinopsis: %s", packet->movie_sinopsis);
+    printf("Movie Rooms: %s", packet->rooms);
 }
