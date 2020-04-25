@@ -7,6 +7,7 @@
         "packet.h": "c",
         "delete_movie.h": "c",
         "retrieve_title.h": "c",
-        "list_operations.h": "c"
+        "list_operations.h": "c",
+        "socket.h": "c"
     }
 }

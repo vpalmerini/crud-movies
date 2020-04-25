@@ -7,6 +7,7 @@
 #define stdin stdin
 
 #include "functions/packet.h"
+#include "functions/get_operation/get_operation.h"
 
 #include "../wrappers/socket/socket.h"
 #include "../wrappers/bind/bind.h"

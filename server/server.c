@@ -76,7 +76,8 @@ again:
     while ((n = read(sock_fd, buffer, buffer_size)) > 0)
     {
         deserialize_packet(buffer, packet, field_size);
-        Print_packet(packet);
+        get_operation(packet->op);
+        // Print_packet(packet);
     }
 
     if (n < 0 && errno == EINTR)
