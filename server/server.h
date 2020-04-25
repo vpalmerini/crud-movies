@@ -9,6 +9,7 @@
 #include "functions/packet.h"
 #include "functions/get_operation/get_operation.h"
 #include "functions/add_movie/add_movie.h"
+#include "functions/read_movie/read_movie.h"
 
 #include "../wrappers/socket/socket.h"
 #include "../wrappers/bind/bind.h"
