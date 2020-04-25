@@ -9,7 +9,7 @@
 #include "server.h"
 
 unsigned char *deserialize_packet(unsigned char *buffer, packet *packet, int field_size);
-void receive_data(int sock_fd, int buffer_size, packet *packet, int field_size);
+void receive_data(int sock_fd, int buffer_size, packet *packet, int field_size, char *db_path);
 void Print_packet(packet *packet);
 
 int main(int argc, char **argv)
@@ -18,6 +18,7 @@ int main(int argc, char **argv)
     socklen_t client_len;
     pid_t childpid;
     packet packet;
+    char db_path[MAXLINE] = "db.bin";
 
     if (argc != 2)
     {
@@ -52,7 +53,7 @@ int main(int argc, char **argv)
         if ((childpid = fork()) == 0)
         {
             Close(sock_fd);
-            receive_data(new_fd, MAXLINE, &packet, FIELD);
+            receive_data(new_fd, MAXLINE, &packet, FIELD, db_path);
             exit(0);
         }
 
@@ -67,7 +68,7 @@ int main(int argc, char **argv)
     exit(0);
 }
 
-void receive_data(int sock_fd, int buffer_size, packet *packet, int field_size)
+void receive_data(int sock_fd, int buffer_size, packet *packet, int field_size, char *db_path)
 {
     ssize_t n;
     char *buffer = (char *)calloc(buffer_size, sizeof(char));
@@ -76,7 +77,7 @@ again:
     while ((n = read(sock_fd, buffer, buffer_size)) > 0)
     {
         deserialize_packet(buffer, packet, field_size);
-        get_operation(packet->op);
+        get_operation(db_path, packet, MAXLINE);
         // Print_packet(packet);
     }
 

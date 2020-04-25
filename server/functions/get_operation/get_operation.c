@@ -1,15 +1,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void get_operation(int op)
+#include "../packet.h"
+#include "../add_movie/add_movie.h"
+
+void get_operation(char *db_path, packet *packet, int packet_size)
 {
-    switch (op)
+    switch (packet->op)
     {
     case 1:
         printf("Listagem de filmes\n");
         break;
     case 2:
         printf("Adicionando Filme\n");
+        add_movie(db_path, packet, packet_size);
         break;
     case 3:
         printf("Removendo Filme\n");
