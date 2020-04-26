@@ -11,6 +11,7 @@ typedef struct packet
     char movie_sinopsis[FIELD];
     char movie_genre[FIELD];
     char rooms[FIELD];
+    int deleted;
 } packet;
 
 #endif
