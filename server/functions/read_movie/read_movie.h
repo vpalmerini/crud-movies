@@ -3,6 +3,6 @@
 
 #include "../packet.h"
 
-void read_movie(char *file_path, packet *packet, int packet_size);
+void read_movie(FILE *fptr, char *file_path, packet *packet, int packet_size);
 
 #endif
