@@ -26,11 +26,6 @@ int main(int argc, char **argv)
         exit(0);
     }
 
-    packet.movie_title = (char *)calloc(FIELD, sizeof(char));
-    packet.movie_genre = (char *)calloc(FIELD, sizeof(char));
-    packet.movie_sinopsis = (char *)calloc(FIELD, sizeof(char));
-    packet.rooms = (char *)calloc(FIELD, sizeof(char));
-
     struct sockaddr_in server_address, client_address;
     const int SERVER_PORT = strtol(argv[1], NULL, 10);
 
@@ -59,11 +54,6 @@ int main(int argc, char **argv)
 
         Close(new_fd);
     }
-
-    free(packet.movie_title);
-    free(packet.movie_genre);
-    free(packet.movie_sinopsis);
-    free(packet.rooms);
 
     exit(0);
 }

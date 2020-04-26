@@ -8,7 +8,7 @@
 void read_movie(char *file_path, packet *packet, int packet_size)
 {
     FILE *fptr;
-    if ((fptr = fopen(file_path, "ab+")) == NULL)
+    if ((fptr = fopen(file_path, "rb")) == NULL)
     {
         printf("%s\n", strerror(errno));
         exit(1);

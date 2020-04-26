@@ -3,6 +3,7 @@
 
 #include "../packet.h"
 #include "../add_movie/add_movie.h"
+#include "../read_movie/read_movie.h"
 
 void get_operation(char *db_path, packet *packet, int packet_size)
 {
@@ -17,6 +18,7 @@ void get_operation(char *db_path, packet *packet, int packet_size)
         break;
     case 3:
         printf("Removendo Filme\n");
+        read_movie(db_path, packet, packet_size);
         break;
     case 4:
         printf("Retornando Filme\n");
