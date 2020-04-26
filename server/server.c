@@ -70,7 +70,6 @@ again:
     {
         deserialize_packet(buffer, packet, field_size);
         get_operation(db_path, packet, MAXLINE);
-        // Print_packet(packet);
     }
 
     if (n < 0 && errno == EINTR)
@@ -93,6 +92,7 @@ unsigned char *deserialize_packet(unsigned char *buffer, packet *packet, int fie
     buffer = deserialize_char(buffer, packet->movie_genre, field_size);
     buffer = deserialize_char(buffer, packet->movie_sinopsis, field_size);
     buffer = deserialize_char(buffer, packet->rooms, field_size);
+    packet->deleted = 0;
 
     return buffer;
 }
@@ -105,4 +105,5 @@ void Print_packet(packet *packet)
     printf("Movie Genre: %s", packet->movie_genre);
     printf("Movie Sinopsis: %s", packet->movie_sinopsis);
     printf("Movie Rooms: %s", packet->rooms);
+    printf("Deleted: %d\n", packet->deleted);
 }

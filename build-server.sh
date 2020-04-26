@@ -6,6 +6,7 @@ gcc serializers/deserialize_char/deserialize_char.c -o serializers/deserialize_c
 gcc server/functions/get_operation/get_operation.c -o server/functions/get_operation/get_operation.o -c
 gcc server/functions/add_movie/add_movie.c -o server/functions/add_movie/add_movie.o -c
 gcc server/functions/read_movie/read_movie.c -o server/functions/read_movie/read_movie.o -c
+gcc server/functions/delete_movie/delete_movie.c -o server/functions/delete_movie/delete_movie.o -c
 
 gcc wrappers/socket/socket.c -o wrappers/socket/socket.o -c
 gcc wrappers/bind/bind.c -o wrappers/bind/bind.o -c
@@ -28,4 +29,5 @@ gcc -o bin/server server/server.o \
                   wrappers/writen/writen.o \
                   server/functions/get_operation/get_operation.o \
                   server/functions/add_movie/add_movie.o \
-                  server/functions/read_movie/read_movie.o
+                  server/functions/read_movie/read_movie.o \
+                  server/functions/delete_movie/delete_movie.o

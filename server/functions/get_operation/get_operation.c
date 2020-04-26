@@ -4,9 +4,12 @@
 #include "../packet.h"
 #include "../add_movie/add_movie.h"
 #include "../read_movie/read_movie.h"
+#include "../delete_movie/delete_movie.h"
 
 void get_operation(char *db_path, packet *packet, int packet_size)
 {
+    FILE *fptr;
+
     switch (packet->op)
     {
     case 1:
@@ -18,7 +21,7 @@ void get_operation(char *db_path, packet *packet, int packet_size)
         break;
     case 3:
         printf("Removendo Filme\n");
-        read_movie(db_path, packet, packet_size);
+        delete_movie(db_path, packet, packet_size);
         break;
     case 4:
         printf("Retornando Filme\n");
