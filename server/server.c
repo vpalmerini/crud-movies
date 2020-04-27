@@ -10,6 +10,7 @@
 
 unsigned char *deserialize_packet(unsigned char *buffer, packet *packet, int field_size);
 void receive_data(int sock_fd, int buffer_size, packet *packet, int field_size, char *db_path, response *response, int response_size);
+unsigned char *serialize_response(unsigned char *buffer, response *response, int packet_size, int field_size);
 
 int main(int argc, char **argv)
 {
@@ -64,12 +65,14 @@ void receive_data(int sock_fd, int buffer_size, packet *packet, int field_size, 
 {
     ssize_t n;
     char *buffer = (char *)calloc(buffer_size, sizeof(char));
+    char *buffer_response = (char *)calloc(response_size, sizeof(char));
 
 again:
     while ((n = read(sock_fd, buffer, buffer_size)) > 0)
     {
         deserialize_packet(buffer, packet, field_size);
         get_operation(db_path, packet, MAXLINE, response, response_size);
+        serialize_response(buffer_response, response, MAXLINE, field_size);
     }
 
     if (n < 0 && errno == EINTR)
@@ -82,6 +85,7 @@ again:
     }
 
     free(buffer);
+    free(buffer_response);
 }
 
 unsigned char *deserialize_packet(unsigned char *buffer, packet *packet, int field_size)
@@ -92,7 +96,19 @@ unsigned char *deserialize_packet(unsigned char *buffer, packet *packet, int fie
     buffer = deserialize_char(buffer, packet->movie_genre, field_size);
     buffer = deserialize_char(buffer, packet->movie_sinopsis, field_size);
     buffer = deserialize_char(buffer, packet->rooms, field_size);
-    packet->deleted = 0;
+
+    return buffer;
+}
+
+unsigned char *serialize_response(unsigned char *buffer, response *response, int packet_size, int field_size)
+{
+    buffer = deserialize_int(buffer, &response->n_movies);
+
+    int i;
+    for (i = 0; i < response->n_movies; i++)
+    {
+        deserialize_packet(buffer, &(response->packets[i]), packet_size);
+    }
 
     return buffer;
 }

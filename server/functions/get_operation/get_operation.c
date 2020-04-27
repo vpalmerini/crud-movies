@@ -19,6 +19,7 @@ void get_operation(char *db_path, packet *packet, int packet_size, response *res
         break;
     case 2:
         printf("Adicionando Filme\n");
+        packet->deleted = 0;
         add_movie(db_path, packet, packet_size);
         break;
     case 3:
