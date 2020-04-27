@@ -7,6 +7,7 @@ gcc server/functions/get_operation/get_operation.c -o server/functions/get_opera
 gcc server/functions/add_movie/add_movie.c -o server/functions/add_movie/add_movie.o -c
 gcc server/functions/read_movie/read_movie.c -o server/functions/read_movie/read_movie.o -c
 gcc server/functions/delete_movie/delete_movie.c -o server/functions/delete_movie/delete_movie.o -c
+gcc server/functions/retrieve_movie/retrieve_movie.c -o server/functions/retrieve_movie/retrieve_movie.o -c
 
 gcc wrappers/socket/socket.c -o wrappers/socket/socket.o -c
 gcc wrappers/bind/bind.c -o wrappers/bind/bind.o -c
@@ -30,4 +31,5 @@ gcc -o bin/server server/server.o \
                   server/functions/get_operation/get_operation.o \
                   server/functions/add_movie/add_movie.o \
                   server/functions/read_movie/read_movie.o \
-                  server/functions/delete_movie/delete_movie.o
+                  server/functions/delete_movie/delete_movie.o \
+                  server/functions/retrieve_movie/retrieve_movie.o

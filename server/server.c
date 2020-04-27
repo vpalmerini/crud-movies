@@ -9,8 +9,9 @@
 #include "server.h"
 
 unsigned char *deserialize_packet(unsigned char *buffer, packet *packet, int field_size);
-void receive_data(int sock_fd, int buffer_size, packet *packet, int field_size, char *db_path);
+void receive_data(int sock_fd, int buffer_size, packet *packet, int field_size, char *db_path, response *response, int response_size);
 void Print_packet(packet *packet);
+void Print_response(response *response);
 
 int main(int argc, char **argv)
 {
@@ -18,6 +19,7 @@ int main(int argc, char **argv)
     socklen_t client_len;
     pid_t childpid;
     packet packet;
+    response response;
     char db_path[MAXLINE] = "db.bin";
 
     if (argc != 2)
@@ -50,7 +52,7 @@ int main(int argc, char **argv)
         if ((childpid = fork()) == 0)
         {
             Close(sock_fd);
-            receive_data(new_fd, MAXLINE, &packet, FIELD, db_path);
+            receive_data(new_fd, MAXLINE, &packet, FIELD, db_path, &response, RESPONSE);
             exit(0);
         }
 
@@ -60,7 +62,7 @@ int main(int argc, char **argv)
     exit(0);
 }
 
-void receive_data(int sock_fd, int buffer_size, packet *packet, int field_size, char *db_path)
+void receive_data(int sock_fd, int buffer_size, packet *packet, int field_size, char *db_path, response *response, int response_size)
 {
     ssize_t n;
     char *buffer = (char *)calloc(buffer_size, sizeof(char));
@@ -69,7 +71,7 @@ again:
     while ((n = read(sock_fd, buffer, buffer_size)) > 0)
     {
         deserialize_packet(buffer, packet, field_size);
-        get_operation(db_path, packet, MAXLINE);
+        get_operation(db_path, packet, MAXLINE, response, response_size);
     }
 
     if (n < 0 && errno == EINTR)
@@ -99,11 +101,23 @@ unsigned char *deserialize_packet(unsigned char *buffer, packet *packet, int fie
 
 void Print_packet(packet *packet)
 {
-    printf("Operation: %d\n", packet->op);
     printf("Movie ID: %d\n", packet->movie_id);
     printf("Movie Title: %s", packet->movie_title);
     printf("Movie Genre: %s", packet->movie_genre);
     printf("Movie Sinopsis: %s", packet->movie_sinopsis);
     printf("Movie Rooms: %s", packet->rooms);
     printf("Deleted: %d\n", packet->deleted);
+}
+
+void Print_response(response *response)
+{
+    printf("Nº of Movies: %d\n", response->n_movies);
+
+    int i;
+    for (i = 0; i < response->n_movies; i++)
+    {
+        Print_packet(&(response->packets[i]));
+    }
+
+    return;
 }

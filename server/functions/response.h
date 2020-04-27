@@ -8,7 +8,7 @@
 typedef struct response
 {
     int n_movies;
-    struct packet packet[N];
+    struct packet packets[N];
 } response;
 
 #endif

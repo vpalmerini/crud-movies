@@ -2,11 +2,13 @@
 #include <stdlib.h>
 
 #include "../packet.h"
+#include "../response.h"
 #include "../add_movie/add_movie.h"
 #include "../read_movie/read_movie.h"
 #include "../delete_movie/delete_movie.h"
+#include "../retrieve_movie/retrieve_movie.h"
 
-void get_operation(char *db_path, packet *packet, int packet_size)
+void get_operation(char *db_path, packet *packet, int packet_size, response *response, int response_size)
 {
     FILE *fptr;
 
@@ -25,6 +27,7 @@ void get_operation(char *db_path, packet *packet, int packet_size)
         break;
     case 4:
         printf("Retornando Filme\n");
+        retrieve_movie(db_path, packet, packet_size, response, response_size);
         break;
     case 5:
         printf("Retornando Título do Filme\n");
