@@ -9,6 +9,7 @@
 
 #include "functions/packet.h"
 #include "functions/response.h"
+#include "functions/print_packet/print_packet.h"
 #include "functions/get_operation/get_operation.h"
 #include "functions/add_movie/add_movie.h"
 #include "functions/read_movie/read_movie.h"

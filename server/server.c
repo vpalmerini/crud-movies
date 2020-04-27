@@ -10,7 +10,6 @@
 
 unsigned char *deserialize_packet(unsigned char *buffer, packet *packet, int field_size);
 void receive_data(int sock_fd, int buffer_size, packet *packet, int field_size, char *db_path, response *response, int response_size);
-void Print_packet(packet *packet);
 void Print_response(response *response);
 
 int main(int argc, char **argv)
@@ -97,16 +96,6 @@ unsigned char *deserialize_packet(unsigned char *buffer, packet *packet, int fie
     packet->deleted = 0;
 
     return buffer;
-}
-
-void Print_packet(packet *packet)
-{
-    printf("Movie ID: %d\n", packet->movie_id);
-    printf("Movie Title: %s", packet->movie_title);
-    printf("Movie Genre: %s", packet->movie_genre);
-    printf("Movie Sinopsis: %s", packet->movie_sinopsis);
-    printf("Movie Rooms: %s", packet->rooms);
-    printf("Deleted: %d\n", packet->deleted);
 }
 
 void Print_response(response *response)

@@ -3,6 +3,7 @@ gcc serializers/serialize_char/serialize_char.c -o serializers/serialize_char/se
 gcc serializers/deserialize_int/deserialize_int.c -o serializers/deserialize_int/deserialize_int.o -c
 gcc serializers/deserialize_char/deserialize_char.c -o serializers/deserialize_char/deserialize_char.o -c
 
+gcc server/functions/print_packet/print_packet.c -o server/functions/print_packet/print_packet.o -c
 gcc server/functions/get_operation/get_operation.c -o server/functions/get_operation/get_operation.o -c
 gcc server/functions/add_movie/add_movie.c -o server/functions/add_movie/add_movie.o -c
 gcc server/functions/read_movie/read_movie.c -o server/functions/read_movie/read_movie.o -c
@@ -32,4 +33,5 @@ gcc -o bin/server server/server.o \
                   server/functions/add_movie/add_movie.o \
                   server/functions/read_movie/read_movie.o \
                   server/functions/delete_movie/delete_movie.o \
-                  server/functions/retrieve_movie/retrieve_movie.o
+                  server/functions/retrieve_movie/retrieve_movie.o \
+                  server/functions/print_packet/print_packet.o
