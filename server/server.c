@@ -10,7 +10,6 @@
 
 unsigned char *deserialize_packet(unsigned char *buffer, packet *packet, int field_size);
 void receive_data(int sock_fd, int buffer_size, packet *packet, int field_size, char *db_path, response *response, int response_size);
-void Print_response(response *response);
 
 int main(int argc, char **argv)
 {
@@ -96,17 +95,4 @@ unsigned char *deserialize_packet(unsigned char *buffer, packet *packet, int fie
     packet->deleted = 0;
 
     return buffer;
-}
-
-void Print_response(response *response)
-{
-    printf("Nº of Movies: %d\n", response->n_movies);
-
-    int i;
-    for (i = 0; i < response->n_movies; i++)
-    {
-        Print_packet(&(response->packets[i]));
-    }
-
-    return;
 }
