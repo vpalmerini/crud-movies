@@ -73,6 +73,7 @@ again:
         deserialize_packet(buffer, packet, field_size);
         get_operation(db_path, packet, MAXLINE, response, response_size);
         serialize_response(buffer_response, response, MAXLINE, field_size);
+        Writen(sock_fd, buffer, response_size);
     }
 
     if (n < 0 && errno == EINTR)
