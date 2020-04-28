@@ -2,6 +2,12 @@
 #include <stdlib.h>
 
 #include "../packet.h"
+#include "../response.h"
+#include "../add_movie/add_movie.h"
+#include "../delete_movie/delete_movie.h"
+#include "../retrieve_movie/retrieve_movie.h"
+#include "../retrieve_title/retrieve_title.h"
+#include "../list_by_genre/list_by_genre.h"
 
 void ask_params(FILE *fp, int op, packet *packet, int field_size)
 {
