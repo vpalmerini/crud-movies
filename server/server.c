@@ -11,6 +11,7 @@
 unsigned char *deserialize_packet(unsigned char *buffer, packet *packet, int field_size);
 void receive_data(int sock_fd, int buffer_size, packet *packet, int field_size, char *db_path, response *response, int response_size);
 unsigned char *serialize_response(unsigned char *buffer, response *response, int packet_size, int field_size);
+unsigned char *deserialize_response(unsigned char *buffer, response *response, int packet_size, int field_size);
 
 int main(int argc, char **argv)
 {
@@ -73,7 +74,7 @@ again:
         deserialize_packet(buffer, packet, field_size);
         get_operation(db_path, packet, MAXLINE, response, response_size);
         serialize_response(buffer_response, response, MAXLINE, field_size);
-        Writen(sock_fd, buffer, response_size);
+        Writen(sock_fd, buffer_response, response_size);
     }
 
     if (n < 0 && errno == EINTR)
@@ -98,17 +99,42 @@ unsigned char *deserialize_packet(unsigned char *buffer, packet *packet, int fie
     buffer = deserialize_char(buffer, packet->movie_sinopsis, field_size);
     buffer = deserialize_char(buffer, packet->rooms, field_size);
 
-    return buffer;
+    return buffer + (MAXLINE - (8 + 4 * field_size));
+}
+
+unsigned char *serialize_packet(unsigned char *buffer, packet *packet, int field_size)
+{
+    buffer = serialize_int(buffer, packet->op);
+    buffer = serialize_int(buffer, packet->movie_id);
+    buffer = serialize_char(buffer, packet->movie_title, field_size);
+    buffer = serialize_char(buffer, packet->movie_genre, field_size);
+    buffer = serialize_char(buffer, packet->movie_sinopsis, field_size);
+    buffer = serialize_char(buffer, packet->rooms, field_size);
+
+    return buffer + (MAXLINE - (8 + (4 * field_size)));
 }
 
 unsigned char *serialize_response(unsigned char *buffer, response *response, int packet_size, int field_size)
+{
+    buffer = serialize_int(buffer, response->n_movies);
+
+    int i;
+    for (i = 0; i < response->n_movies; i++)
+    {
+        buffer = serialize_packet(buffer, &(response->packets[i]), field_size);
+    }
+
+    return buffer;
+}
+
+unsigned char *deserialize_response(unsigned char *buffer, response *response, int packet_size, int field_size)
 {
     buffer = deserialize_int(buffer, &response->n_movies);
 
     int i;
     for (i = 0; i < response->n_movies; i++)
     {
-        deserialize_packet(buffer, &(response->packets[i]), packet_size);
+        buffer = deserialize_packet(buffer, &response->packets[i], field_size);
     }
 
     return buffer;
