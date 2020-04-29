@@ -14,7 +14,7 @@
 
 unsigned char *serialize_packet(unsigned char *buffer, packet *packet, int field_size);
 unsigned char *deserialize_packet(unsigned char *buffer, packet *packet, int field_size);
-void send_data(int sock_fd, packet *packet, int buffer_size, int field_size);
+void send_data(int sock_fd, packet *packet, int buffer_size, int field_size, int op);
 unsigned char *deserialize_response(unsigned char *buffer, response *response, int packet_size, int field_size);
 ssize_t Readline(int fd, void *vptr, size_t maxlen);
 
@@ -50,7 +50,7 @@ int main(int argc, char **argv)
     while (selected_op != 0)
     {
         ask_params(stdin, selected_op, &packet, FIELD);
-        send_data(sock_fd, &packet, MAXLINE, FIELD);
+        send_data(sock_fd, &packet, MAXLINE, FIELD, selected_op);
         list_operations();
         selected_op = get_operation(stdin, FIELD);
     }
@@ -82,7 +82,7 @@ unsigned char *deserialize_packet(unsigned char *buffer, packet *packet, int fie
     return buffer + (MAXLINE - (8 + 4 * field_size));
 }
 
-void send_data(int sock_fd, packet *packet, int buffer_size, int field_size)
+void send_data(int sock_fd, packet *packet, int buffer_size, int field_size, int op)
 {
     char *buffer = (char *)calloc(buffer_size, sizeof(char));
     char *resp_buffer = (char *)calloc(RESPONSE, sizeof(char));
@@ -91,13 +91,16 @@ void send_data(int sock_fd, packet *packet, int buffer_size, int field_size)
     serialize_packet(buffer, packet, field_size);
     Writen(sock_fd, buffer, buffer_size);
 
-    if (Readline(sock_fd, resp_buffer, RESPONSE) == 0)
+    if (op != 2 && op != 3)
     {
-        printf("str_cli: server terminated prematurely\n");
-        exit(0);
-    }
+        if (Readline(sock_fd, resp_buffer, RESPONSE) == 0)
+        {
+            printf("str_cli: server terminated prematurely\n");
+            exit(0);
+        }
 
-    deserialize_response(resp_buffer, &response, MAXLINE, field_size);
+        deserialize_response(resp_buffer, &response, MAXLINE, field_size);
+    }
 
     free(resp_buffer);
     free(buffer);

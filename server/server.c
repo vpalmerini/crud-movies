@@ -72,9 +72,14 @@ again:
     while ((n = read(sock_fd, buffer, buffer_size)) > 0)
     {
         deserialize_packet(buffer, packet, field_size);
+        int op = packet->op;
         get_operation(db_path, packet, MAXLINE, response, response_size);
-        serialize_response(buffer_response, response, MAXLINE, field_size);
-        Writen(sock_fd, buffer_response, response_size);
+
+        if (op != 2 && op != 3)
+        {
+            serialize_response(buffer_response, response, MAXLINE, field_size);
+            Writen(sock_fd, buffer_response, response_size);
+        }
     }
 
     if (n < 0 && errno == EINTR)
