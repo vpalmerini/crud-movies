@@ -79,6 +79,7 @@ again:
         {
             serialize_response(buffer_response, response, MAXLINE, field_size);
             Writen(sock_fd, buffer_response, response_size);
+            // deserialize_response(buffer_response, response, MAXLINE, field_size);
         }
     }
 

@@ -14,7 +14,7 @@
 
 unsigned char *serialize_packet(unsigned char *buffer, packet *packet, int field_size);
 unsigned char *deserialize_packet(unsigned char *buffer, packet *packet, int field_size);
-void send_data(int sock_fd, packet *packet, int buffer_size, int field_size, int op);
+void send_data(int sock_fd, packet *packet, response *response, int buffer_size, int field_size, int op);
 unsigned char *deserialize_response(unsigned char *buffer, response *response, int packet_size, int field_size);
 ssize_t Readline(int fd, void *vptr, size_t maxlen);
 
@@ -24,6 +24,7 @@ int main(int argc, char **argv)
     int selected_op;
     struct sockaddr_in server_address;
     packet packet;
+    response response;
 
     if (argc != 3)
     {
@@ -50,7 +51,7 @@ int main(int argc, char **argv)
     while (selected_op != 0)
     {
         ask_params(stdin, selected_op, &packet, FIELD);
-        send_data(sock_fd, &packet, MAXLINE, FIELD, selected_op);
+        send_data(sock_fd, &packet, &response, MAXLINE, FIELD, selected_op);
         list_operations();
         selected_op = get_operation(stdin, FIELD);
     }
@@ -82,11 +83,10 @@ unsigned char *deserialize_packet(unsigned char *buffer, packet *packet, int fie
     return buffer + (MAXLINE - (8 + 4 * field_size));
 }
 
-void send_data(int sock_fd, packet *packet, int buffer_size, int field_size, int op)
+void send_data(int sock_fd, packet *packet, response *response, int buffer_size, int field_size, int op)
 {
     char *buffer = (char *)calloc(buffer_size, sizeof(char));
     char *resp_buffer = (char *)calloc(RESPONSE, sizeof(char));
-    response response;
 
     serialize_packet(buffer, packet, field_size);
     Writen(sock_fd, buffer, buffer_size);
@@ -99,7 +99,7 @@ void send_data(int sock_fd, packet *packet, int buffer_size, int field_size, int
             exit(0);
         }
 
-        deserialize_response(resp_buffer, &response, MAXLINE, field_size);
+        deserialize_response(resp_buffer, response, MAXLINE, field_size);
     }
 
     free(resp_buffer);
@@ -111,17 +111,11 @@ void send_data(int sock_fd, packet *packet, int buffer_size, int field_size, int
 unsigned char *deserialize_response(unsigned char *buffer, response *response, int packet_size, int field_size)
 {
     buffer = deserialize_int(buffer, &response->n_movies);
-    printf("Nº Movies: %d\n", response->n_movies);
 
     int i;
     for (i = 0; i < response->n_movies; i++)
     {
         buffer = deserialize_packet(buffer, &response->packets[i], field_size);
-        printf("ID: %d\n", response->packets[i].movie_id);
-        printf("Title: %s", response->packets[i].movie_title);
-        printf("Genre: %s", response->packets[i].movie_genre);
-        printf("Sinopsis: %s", response->packets[i].movie_sinopsis);
-        printf("Rooms: %s", response->packets[i].rooms);
     }
 
     return buffer;
@@ -133,7 +127,7 @@ ssize_t Readline(int fd, void *vptr, size_t maxlen)
     char c, *ptr;
 
     ptr = vptr;
-    for (n = 1; n < maxlen; n++)
+    for (n = 0; n < maxlen; n++)
     {
     again:
         if ((rc = read(fd, &c, 1)) == 1)
