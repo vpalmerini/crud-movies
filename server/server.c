@@ -28,8 +28,6 @@ int main(int argc, char **argv)
         exit(0);
     }
 
-    packet.deleted = 0;
-
     struct sockaddr_in server_address, client_address;
     const int SERVER_PORT = strtol(argv[1], NULL, 10);
 

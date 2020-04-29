@@ -111,11 +111,17 @@ void send_data(int sock_fd, packet *packet, response *response, int buffer_size,
 unsigned char *deserialize_response(unsigned char *buffer, response *response, int packet_size, int field_size)
 {
     buffer = deserialize_int(buffer, &response->n_movies);
+    printf("Nº Movies: %d\n", response->n_movies);
 
     int i;
     for (i = 0; i < response->n_movies; i++)
     {
         buffer = deserialize_packet(buffer, &response->packets[i], field_size);
+        printf("ID: %d\n", response->packets[i].movie_id);
+        printf("Title: %s", response->packets[i].movie_title);
+        printf("Genre: %s", response->packets[i].movie_genre);
+        printf("Sinopsis: %s", response->packets[i].movie_sinopsis);
+        printf("Rooms: %s", response->packets[i].rooms);
     }
 
     return buffer;
