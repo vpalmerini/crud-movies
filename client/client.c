@@ -15,6 +15,8 @@
 unsigned char *serialize_packet(unsigned char *buffer, packet *packet, int field_size);
 unsigned char *deserialize_packet(unsigned char *buffer, packet *packet, int field_size);
 void send_data(int sock_fd, packet *packet, int buffer_size, int field_size);
+unsigned char *deserialize_response(unsigned char *buffer, response *response, int packet_size, int field_size);
+ssize_t Readline(int fd, void *vptr, size_t maxlen);
 
 int main(int argc, char **argv)
 {
@@ -28,11 +30,6 @@ int main(int argc, char **argv)
         printf("Argumentos: <Endereço IP> <Porta>\n");
         exit(0);
     }
-
-    packet.movie_title = (char *)calloc(FIELD, sizeof(char));
-    packet.movie_genre = (char *)calloc(FIELD, sizeof(char));
-    packet.movie_sinopsis = (char *)calloc(FIELD, sizeof(char));
-    packet.rooms = (char *)calloc(FIELD, sizeof(char));
 
     const int SERVER_PORT = strtol(argv[2], NULL, 10);
     sock_fd = Socket(PF_INET, SOCK_STREAM, 0);
@@ -48,6 +45,7 @@ int main(int argc, char **argv)
     list_operations();
 
     selected_op = get_operation(stdin, FIELD);
+    printf("Operação Escolhida: %d\n", selected_op);
 
     while (selected_op != 0)
     {
@@ -56,11 +54,6 @@ int main(int argc, char **argv)
         list_operations();
         selected_op = get_operation(stdin, FIELD);
     }
-
-    free(packet.movie_title);
-    free(packet.movie_genre);
-    free(packet.movie_sinopsis);
-    free(packet.rooms);
 
     exit(0);
 }
@@ -86,17 +79,76 @@ unsigned char *deserialize_packet(unsigned char *buffer, packet *packet, int fie
     buffer = deserialize_char(buffer, packet->movie_sinopsis, field_size);
     buffer = deserialize_char(buffer, packet->rooms, field_size);
 
-    return buffer;
+    return buffer + (MAXLINE - (8 + 4 * field_size));
 }
 
 void send_data(int sock_fd, packet *packet, int buffer_size, int field_size)
 {
     char *buffer = (char *)calloc(buffer_size, sizeof(char));
+    char *resp_buffer = (char *)calloc(RESPONSE, sizeof(char));
+    response response;
 
     serialize_packet(buffer, packet, field_size);
     Writen(sock_fd, buffer, buffer_size);
 
+    if (Readline(sock_fd, resp_buffer, RESPONSE) == 0)
+    {
+        printf("str_cli: server terminated prematurely\n");
+        exit(0);
+    }
+
+    deserialize_response(resp_buffer, &response, MAXLINE, field_size);
+
+    free(resp_buffer);
     free(buffer);
 
     return;
+}
+
+unsigned char *deserialize_response(unsigned char *buffer, response *response, int packet_size, int field_size)
+{
+    buffer = deserialize_int(buffer, &response->n_movies);
+    printf("Nº Movies: %d\n", response->n_movies);
+
+    int i;
+    for (i = 0; i < response->n_movies; i++)
+    {
+        buffer = deserialize_packet(buffer, &response->packets[i], field_size);
+        printf("ID: %d\n", response->packets[i].movie_id);
+        printf("Title: %s", response->packets[i].movie_title);
+        printf("Genre: %s", response->packets[i].movie_genre);
+        printf("Sinopsis: %s", response->packets[i].movie_sinopsis);
+        printf("Rooms: %s", response->packets[i].rooms);
+    }
+
+    return buffer;
+}
+
+ssize_t Readline(int fd, void *vptr, size_t maxlen)
+{
+    ssize_t n, rc;
+    char c, *ptr;
+
+    ptr = vptr;
+    for (n = 1; n < maxlen; n++)
+    {
+    again:
+        if ((rc = read(fd, &c, 1)) == 1)
+        {
+            *ptr++ = c;
+        }
+        else if (rc == 0)
+        {
+            *ptr = 0;
+            return (n - 1);
+        }
+        else
+        {
+            if (errno == EINTR)
+                goto again;
+            return (-1);
+        }
+    }
+    *ptr = 0;
+    return (n);
 }

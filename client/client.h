@@ -2,10 +2,12 @@
 #define OPERATION 32
 #define FIELD 256
 #define ROOMS 20
+#define RESPONSE 20482
 #define SA struct sockaddr
 #define stdin stdin
 
 #include "functions/packet.h"
+#include "functions/response.h"
 
 #include "functions/add_movie/add_movie.h"
 #include "functions/ask_params/ask_params.h"
