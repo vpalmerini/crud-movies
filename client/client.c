@@ -100,6 +100,25 @@ void send_data(int sock_fd, packet *packet, response *response, int buffer_size,
         }
 
         deserialize_response(resp_buffer, response, MAXLINE, field_size);
+
+        if (response->n_movies > 0)
+        {
+            switch (op)
+            {
+            case 4:
+                printf("ID: %d\n", response->packets[0].movie_id);
+                printf("Title: %s", response->packets[0].movie_title);
+                printf("Genre: %s", response->packets[0].movie_genre);
+                printf("Sinopsis: %s", response->packets[0].movie_sinopsis);
+                printf("Rooms: %s", response->packets[0].rooms);
+            case 5:
+                printf("Título: %s", response->packets[0].movie_title);
+                break;
+
+            default:
+                break;
+            }
+        }
     }
 
     free(resp_buffer);
@@ -116,17 +135,13 @@ unsigned char *deserialize_response(unsigned char *buffer, response *response, i
     if (response->n_movies == 0)
     {
         printf("Nenhum filme encontrado\n");
+        return buffer;
     }
 
     int i;
     for (i = 0; i < response->n_movies; i++)
     {
         buffer = deserialize_packet(buffer, &response->packets[i], field_size);
-        printf("ID: %d\n", response->packets[i].movie_id);
-        printf("Title: %s", response->packets[i].movie_title);
-        printf("Genre: %s", response->packets[i].movie_genre);
-        printf("Sinopsis: %s", response->packets[i].movie_sinopsis);
-        printf("Rooms: %s", response->packets[i].rooms);
     }
 
     return buffer;

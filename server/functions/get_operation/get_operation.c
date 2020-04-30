@@ -32,6 +32,7 @@ void get_operation(char *db_path, packet *packet, int packet_size, response *res
         break;
     case 5:
         printf("Retornando Título do Filme\n");
+        retrieve_movie(db_path, packet, packet_size, response, response_size);
         break;
     case 6:
         printf("Listando Filmes de um Gênero\n");
