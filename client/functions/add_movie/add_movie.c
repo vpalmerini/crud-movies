@@ -8,9 +8,7 @@ void add_movie(FILE *fp, packet *packet, int field_size)
 {
     char *input = (char *)calloc(field_size, sizeof(char));
 
-    printf("Entre com o id do filme:\n");
-    fgets(input, field_size, fp);
-    packet->movie_id = atoi(input);
+    packet->movie_id = 0;
 
     printf("Entre com o título do filme:\n");
     fgets(input, field_size, fp);

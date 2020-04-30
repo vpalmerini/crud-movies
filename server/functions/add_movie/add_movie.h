@@ -3,6 +3,6 @@
 
 #include "../packet.h"
 
-void add_movie(char *db_path, packet *packet, int packet_size);
+void add_movie(char *db_path, packet *packet, int packet_size, int *counter);
 
 #endif

@@ -111,6 +111,7 @@ void send_data(int sock_fd, packet *packet, response *response, int buffer_size,
                 printf("Genre: %s", response->packets[0].movie_genre);
                 printf("Sinopsis: %s", response->packets[0].movie_sinopsis);
                 printf("Rooms: %s", response->packets[0].rooms);
+                break;
             case 5:
                 printf("Título: %s", response->packets[0].movie_title);
                 break;

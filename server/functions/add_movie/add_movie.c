@@ -5,8 +5,11 @@
 
 #include "../packet.h"
 
-void add_movie(char *file_path, packet *packet, int packet_size)
+void add_movie(char *file_path, packet *packet, int packet_size, int *counter)
 {
+    packet->movie_id = *counter;
+    *counter += 1;
+
     FILE *fptr;
     if ((fptr = fopen(file_path, "ab+")) == NULL)
     {

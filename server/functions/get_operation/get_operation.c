@@ -8,7 +8,7 @@
 #include "../delete_movie/delete_movie.h"
 #include "../retrieve_movie/retrieve_movie.h"
 
-void get_operation(char *db_path, packet *packet, int packet_size, response *response, int response_size)
+void get_operation(char *db_path, packet *packet, int packet_size, response *response, int response_size, int *counter)
 {
     FILE *fptr;
 
@@ -20,7 +20,7 @@ void get_operation(char *db_path, packet *packet, int packet_size, response *res
     case 2:
         printf("Adicionando Filme\n");
         packet->deleted = 0;
-        add_movie(db_path, packet, packet_size);
+        add_movie(db_path, packet, packet_size, counter);
         break;
     case 3:
         printf("Removendo Filme\n");

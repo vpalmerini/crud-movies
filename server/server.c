@@ -9,7 +9,7 @@
 #include "server.h"
 
 unsigned char *deserialize_packet(unsigned char *buffer, packet *packet, int field_size);
-void receive_data(int sock_fd, int buffer_size, packet *packet, int field_size, char *db_path, response *response, int response_size);
+void receive_data(int sock_fd, int buffer_size, packet *packet, int field_size, char *db_path, response *response, int response_size, int *counter);
 unsigned char *serialize_response(unsigned char *buffer, response *response, int packet_size, int field_size);
 unsigned char *deserialize_response(unsigned char *buffer, response *response, int packet_size, int field_size);
 
@@ -21,6 +21,7 @@ int main(int argc, char **argv)
     packet packet;
     response response;
     char db_path[MAXLINE] = "db.bin";
+    int id_counter = 1;
 
     if (argc != 2)
     {
@@ -50,7 +51,7 @@ int main(int argc, char **argv)
         if ((childpid = fork()) == 0)
         {
             Close(sock_fd);
-            receive_data(new_fd, MAXLINE, &packet, FIELD, db_path, &response, RESPONSE);
+            receive_data(new_fd, MAXLINE, &packet, FIELD, db_path, &response, RESPONSE, &id_counter);
             exit(0);
         }
 
@@ -60,7 +61,7 @@ int main(int argc, char **argv)
     exit(0);
 }
 
-void receive_data(int sock_fd, int buffer_size, packet *packet, int field_size, char *db_path, response *response, int response_size)
+void receive_data(int sock_fd, int buffer_size, packet *packet, int field_size, char *db_path, response *response, int response_size, int *counter)
 {
     ssize_t n;
     char *buffer = (char *)calloc(buffer_size, sizeof(char));
@@ -71,7 +72,7 @@ again:
     {
         deserialize_packet(buffer, packet, field_size);
         int op = packet->op;
-        get_operation(db_path, packet, MAXLINE, response, response_size);
+        get_operation(db_path, packet, MAXLINE, response, response_size, counter);
 
         if (op != 2 && op != 3)
         {
