@@ -21,6 +21,7 @@ void get_operation(char *db_path, packet *packet, int packet_size, response *res
         printf("Adicionando Filme\n");
         packet->deleted = 0;
         add_movie(db_path, packet, packet_size, counter);
+        retrieve_movie(db_path, packet, packet_size, response, response_size);
         break;
     case 3:
         printf("Removendo Filme\n");

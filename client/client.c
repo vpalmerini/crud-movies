@@ -91,7 +91,7 @@ void send_data(int sock_fd, packet *packet, response *response, int buffer_size,
     serialize_packet(buffer, packet, field_size);
     Writen(sock_fd, buffer, buffer_size);
 
-    if (op != 2 && op != 3)
+    if (op != 3)
     {
         if (Readline(sock_fd, resp_buffer, RESPONSE) == 0)
         {
@@ -105,6 +105,9 @@ void send_data(int sock_fd, packet *packet, response *response, int buffer_size,
         {
             switch (op)
             {
+            case 2:
+                printf("ID do filme adicionado: %d\n", response->packets[0].movie_id);
+                break;
             case 4:
                 printf("ID: %d\n", response->packets[0].movie_id);
                 printf("Title: %s", response->packets[0].movie_title);

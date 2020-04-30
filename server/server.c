@@ -74,7 +74,7 @@ again:
         int op = packet->op;
         get_operation(db_path, packet, MAXLINE, response, response_size, counter);
 
-        if (op != 2 && op != 3)
+        if (op != 3)
         {
             serialize_response(buffer_response, response, MAXLINE, field_size);
             Writen(sock_fd, buffer_response, response_size);
