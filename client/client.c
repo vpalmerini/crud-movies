@@ -113,6 +113,11 @@ unsigned char *deserialize_response(unsigned char *buffer, response *response, i
     buffer = deserialize_int(buffer, &response->n_movies);
     printf("Nº Movies: %d\n", response->n_movies);
 
+    if (response->n_movies == 0)
+    {
+        printf("Nenhum filme encontrado\n");
+    }
+
     int i;
     for (i = 0; i < response->n_movies; i++)
     {
