@@ -130,6 +130,17 @@ void send_data(int sock_fd, packet *packet, response *response, int buffer_size,
             case 5:
                 printf("Título: %s", response->packets[0].movie_title);
                 break;
+            case 6:
+                for (i = 0; i < response->n_movies; i++)
+                {
+                    printf("ID: %d\n", response->packets[i].movie_id);
+                    printf("Title: %s", response->packets[i].movie_title);
+                    printf("Genre: %s", response->packets[i].movie_genre);
+                    printf("Sinopsis: %s", response->packets[i].movie_sinopsis);
+                    printf("Rooms: %s", response->packets[i].rooms);
+                    printf("\n");
+                }
+                break;
             case 7:
                 for (i = 0; i < response->n_movies; i++)
                 {

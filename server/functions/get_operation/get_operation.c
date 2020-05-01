@@ -8,11 +8,10 @@
 #include "../delete_movie/delete_movie.h"
 #include "../retrieve_movie/retrieve_movie.h"
 #include "../list_movies/list_movies.h"
+#include "../list_movies_by_genre/list_movies_by_genre.h"
 
 void get_operation(char *db_path, packet *packet, int packet_size, response *response, int response_size, int *counter)
 {
-    FILE *fptr;
-
     switch (packet->op)
     {
     case 1:
@@ -39,6 +38,7 @@ void get_operation(char *db_path, packet *packet, int packet_size, response *res
         break;
     case 6:
         printf("Listando Filmes de um Gênero\n");
+        list_movies_by_genre(db_path, packet, packet_size, response);
         break;
     case 7:
         printf("Listagem de filmes (apenas Título e Salas)\n");
