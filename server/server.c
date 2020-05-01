@@ -78,7 +78,7 @@ again:
         {
             serialize_response(buffer_response, response, MAXLINE, field_size);
             Writen(sock_fd, buffer_response, response_size);
-            // deserialize_response(buffer_response, response, MAXLINE, field_size);
+            deserialize_response(buffer_response, response, MAXLINE, field_size);
         }
     }
 
@@ -103,6 +103,12 @@ unsigned char *deserialize_packet(unsigned char *buffer, packet *packet, int fie
     buffer = deserialize_char(buffer, packet->movie_genre, field_size);
     buffer = deserialize_char(buffer, packet->movie_sinopsis, field_size);
     buffer = deserialize_char(buffer, packet->rooms, field_size);
+
+    printf("ID: %d\n", packet->movie_id);
+    printf("Title: %s", packet->movie_title);
+    printf("Genre: %s", packet->movie_genre);
+    printf("Sinopsis: %s", packet->movie_sinopsis);
+    printf("Rooms: %s", packet->rooms);
 
     return buffer + (MAXLINE - (8 + 4 * field_size));
 }

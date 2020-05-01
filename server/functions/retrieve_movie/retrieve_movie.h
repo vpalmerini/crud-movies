@@ -4,6 +4,6 @@
 #include "../packet.h"
 #include "../response.h"
 
-void retrieve_movie(char *file_path, packet *packet, int packet_size, response *response, int response_size);
+void retrieve_movie(char *file_path, packet *packet, int packet_size, response *response);
 
 #endif
