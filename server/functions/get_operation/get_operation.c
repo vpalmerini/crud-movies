@@ -42,6 +42,7 @@ void get_operation(char *db_path, packet *packet, int packet_size, response *res
         break;
     case 7:
         printf("Listagem de filmes (apenas Título e Salas)\n");
+        list_movies(db_path, packet, packet_size, response);
         break;
     default:
         printf("Operação inválida!\n");
