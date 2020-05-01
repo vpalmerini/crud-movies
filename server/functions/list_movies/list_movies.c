@@ -11,7 +11,7 @@ void list_movies(char *file_path, packet *packet, int packet_size, response *res
     response->n_movies = 0;
 
     FILE *fptr;
-    if ((fptr = fopen(file_path, "rb+")) == NULL)
+    if ((fptr = fopen(file_path, "ab+")) == NULL)
     {
         printf("%s\n", strerror(errno));
         exit(1);
@@ -25,12 +25,6 @@ void list_movies(char *file_path, packet *packet, int packet_size, response *res
         {
             response->n_movies += 1;
             response->packets[i] = *packet;
-
-            printf("ID: %d\n", response->packets[i].movie_id);
-            printf("Title: %s", response->packets[i].movie_title);
-            printf("Genre: %s", response->packets[i].movie_genre);
-            printf("Sinopsis: %s", response->packets[i].movie_sinopsis);
-            printf("Rooms: %s", response->packets[i].rooms);
 
             i += 1;
         }

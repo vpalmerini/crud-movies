@@ -12,7 +12,7 @@ void retrieve_movie(char *file_path, packet *packet, int packet_size, response *
     response->n_movies = 0;
 
     FILE *fptr;
-    if ((fptr = fopen(file_path, "rb+")) == NULL)
+    if ((fptr = fopen(file_path, "ab+")) == NULL)
     {
         printf("%s\n", strerror(errno));
         exit(1);
