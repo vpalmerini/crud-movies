@@ -8,8 +8,7 @@
 
 #include "server.h"
 
-unsigned char *deserialize_packet(unsigned char *buffer, packet *packet, int field_size);
-void receive_data(int sock_fd, int buffer_size, packet *packet, int field_size, char *db_path, response *response, int response_size, int *counter);
+void receive_data(int sock_fd, int buffer_size, packet *packet, int field_size, char *db_path, response *response, int response_size, int *counter, int packet_size);
 unsigned char *serialize_response(unsigned char *buffer, response *response, int packet_size, int field_size);
 
 int main(int argc, char **argv)
@@ -50,7 +49,7 @@ int main(int argc, char **argv)
         if ((childpid = fork()) == 0)
         {
             Close(sock_fd);
-            receive_data(new_fd, MAXLINE, &packet, FIELD, db_path, &response, RESPONSE, &id_counter);
+            receive_data(new_fd, MAXLINE, &packet, FIELD, db_path, &response, RESPONSE, &id_counter, MAXLINE);
             exit(0);
         }
 
@@ -60,7 +59,7 @@ int main(int argc, char **argv)
     exit(0);
 }
 
-void receive_data(int sock_fd, int buffer_size, packet *packet, int field_size, char *db_path, response *response, int response_size, int *counter)
+void receive_data(int sock_fd, int buffer_size, packet *packet, int field_size, char *db_path, response *response, int response_size, int *counter, int packet_size)
 {
     ssize_t n;
     char *buffer = (char *)calloc(buffer_size, sizeof(char));
@@ -69,7 +68,7 @@ void receive_data(int sock_fd, int buffer_size, packet *packet, int field_size, 
 again:
     while ((n = read(sock_fd, buffer, buffer_size)) > 0)
     {
-        deserialize_packet(buffer, packet, field_size);
+        deserialize_packet(buffer, packet, field_size, packet_size);
         int op = packet->op;
         get_operation(db_path, packet, MAXLINE, response, response_size, counter);
 
@@ -91,18 +90,6 @@ again:
 
     free(buffer);
     free(buffer_response);
-}
-
-unsigned char *deserialize_packet(unsigned char *buffer, packet *packet, int field_size)
-{
-    buffer = deserialize_int(buffer, &packet->op);
-    buffer = deserialize_int(buffer, &packet->movie_id);
-    buffer = deserialize_char(buffer, packet->movie_title, field_size);
-    buffer = deserialize_char(buffer, packet->movie_genre, field_size);
-    buffer = deserialize_char(buffer, packet->movie_sinopsis, field_size);
-    buffer = deserialize_char(buffer, packet->rooms, field_size);
-
-    return buffer + (MAXLINE - (8 + 4 * field_size));
 }
 
 unsigned char *serialize_response(unsigned char *buffer, response *response, int packet_size, int field_size)

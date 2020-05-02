@@ -9,6 +9,7 @@
 
 #include "../serializers/packet.h"
 #include "../serializers/response.h"
+
 #include "functions/print_packet/print_packet.h"
 #include "functions/print_response/print_response.h"
 #include "functions/get_operation/get_operation.h"
@@ -29,3 +30,4 @@
 #include "../serializers/deserialize_int/deserialize_int.h"
 #include "../serializers/deserialize_char/deserialize_char.h"
 #include "../serializers/serialize_packet/serialize_packet.h"
+#include "../serializers/deserialize_packet/deserialize_packet.h"

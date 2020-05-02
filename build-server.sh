@@ -3,6 +3,7 @@ gcc serializers/serialize_char/serialize_char.c -o serializers/serialize_char/se
 gcc serializers/deserialize_int/deserialize_int.c -o serializers/deserialize_int/deserialize_int.o -c
 gcc serializers/deserialize_char/deserialize_char.c -o serializers/deserialize_char/deserialize_char.o -c
 gcc serializers/serialize_packet/serialize_packet.c -o serializers/serialize_packet/serialize_packet.o -c
+gcc serializers/deserialize_packet/deserialize_packet.c -o serializers/deserialize_packet/deserialize_packet.o -c
 
 gcc server/functions/print_packet/print_packet.c -o server/functions/print_packet/print_packet.o -c
 gcc server/functions/print_response/print_response.c -o server/functions/print_response/print_response.o -c
@@ -28,6 +29,7 @@ gcc -o bin/server server/server.o \
                   serializers/deserialize_int/deserialize_int.o \
                   serializers/deserialize_char/deserialize_char.o \
                   serializers/serialize_packet/serialize_packet.o \
+                  serializers/deserialize_packet/deserialize_packet.o \
                   wrappers/socket/socket.o \
                   wrappers/bind/bind.o \
                   wrappers/listen/listen.o \
