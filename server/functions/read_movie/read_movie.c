@@ -3,7 +3,7 @@
 #include <string.h>
 #include <errno.h>
 
-#include "../packet.h"
+#include "../../../serializers/packet.h"
 
 void read_movie(FILE *fptr, char *file_path, packet *packet, int packet_size)
 {

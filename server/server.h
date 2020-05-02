@@ -7,8 +7,8 @@
 #define SA struct sockaddr
 #define stdin stdin
 
-#include "functions/packet.h"
-#include "functions/response.h"
+#include "../serializers/packet.h"
+#include "../serializers/response.h"
 #include "functions/print_packet/print_packet.h"
 #include "functions/print_response/print_response.h"
 #include "functions/get_operation/get_operation.h"

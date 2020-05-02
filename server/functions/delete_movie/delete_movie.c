@@ -3,7 +3,7 @@
 #include <string.h>
 #include <errno.h>
 
-#include "../packet.h"
+#include "../../../serializers/packet.h"
 
 void delete_movie(char *file_path, packet *packet, int packet_size)
 {

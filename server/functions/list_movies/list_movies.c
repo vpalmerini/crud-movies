@@ -3,8 +3,8 @@
 #include <string.h>
 #include <errno.h>
 
-#include "../packet.h"
-#include "../response.h"
+#include "../../../serializers/packet.h"
+#include "../../../serializers/response.h"
 
 void list_movies(char *file_path, packet *packet, int packet_size, response *response, int response_size)
 {
