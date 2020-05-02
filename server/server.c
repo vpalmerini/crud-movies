@@ -9,7 +9,6 @@
 #include "server.h"
 
 void receive_data(int sock_fd, int buffer_size, packet *packet, int field_size, char *db_path, response *response, int response_size, int *counter, int packet_size);
-unsigned char *serialize_response(unsigned char *buffer, response *response, int packet_size, int field_size);
 
 int main(int argc, char **argv)
 {
@@ -90,17 +89,4 @@ again:
 
     free(buffer);
     free(buffer_response);
-}
-
-unsigned char *serialize_response(unsigned char *buffer, response *response, int packet_size, int field_size)
-{
-    buffer = serialize_int(buffer, response->n_movies);
-
-    int i;
-    for (i = 0; i < response->n_movies; i++)
-    {
-        buffer = serialize_packet(buffer, &(response->packets[i]), field_size, packet_size);
-    }
-
-    return buffer;
 }
