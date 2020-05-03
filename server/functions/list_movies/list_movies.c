@@ -29,7 +29,6 @@ void list_movies(char *file_path, packet *packet, int packet_size, response *res
             i += 1;
         }
     }
-    printf("Nº Movies: %d\n", response->n_movies);
 
     return;
 }

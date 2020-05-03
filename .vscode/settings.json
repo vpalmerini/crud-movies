@@ -12,6 +12,7 @@
         "add_movie.h": "c",
         "get_operation.h": "c",
         "deserialize_packet.h": "c",
-        "errno.h": "c"
+        "errno.h": "c",
+        "retrieve_movie.h": "c"
     }
 }

@@ -29,12 +29,5 @@ void retrieve_movie(char *file_path, packet *packet, int packet_size, response *
         }
     }
 
-    printf("Nº Movies: %d\n", response->n_movies);
-    printf("ID: %d\n", response->packets[0].movie_id);
-    printf("Title: %s", response->packets[0].movie_title);
-    printf("Genre: %s", response->packets[0].movie_genre);
-    printf("Sinopsis: %s", response->packets[0].movie_sinopsis);
-    printf("Rooms: %s", response->packets[0].rooms);
-
     return;
 }

@@ -31,7 +31,6 @@ void list_movies_by_genre(char *file_path, packet *packet, int packet_size, resp
             i += 1;
         }
     }
-    printf("Nº Movies: %d\n", response->n_movies);
 
     return;
 }

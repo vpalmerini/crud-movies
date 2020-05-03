@@ -5,7 +5,6 @@
 
 void Print_response(response *response)
 {
-    printf("Nº of Movies: %d\n", response->n_movies);
 
     int i;
     for (i = 0; i < response->n_movies; i++)

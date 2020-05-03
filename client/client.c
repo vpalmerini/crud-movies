@@ -48,6 +48,7 @@ int main(int argc, char **argv)
         send_data(sock_fd, &packet, &response, MAXLINE, FIELD, selected_op, MAXLINE, RESPONSE);
         list_operations();
         selected_op = get_operation(stdin, FIELD);
+        printf("Operação Escolhida: %d\n", selected_op);
     }
 
     exit(0);

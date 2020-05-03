@@ -9,7 +9,6 @@
 unsigned char *deserialize_response(unsigned char *buffer, response *response, int packet_size, int field_size)
 {
     buffer = deserialize_int(buffer, &response->n_movies);
-    printf("Nº Movies: %d\n", response->n_movies);
 
     if (response->n_movies == 0)
     {
