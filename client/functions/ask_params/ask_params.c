@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "../packet.h"
-#include "../response.h"
+#include "../../../serializers/packet.h"
+#include "../../../serializers/response.h"
 #include "../add_movie/add_movie.h"
 #include "../delete_movie/delete_movie.h"
 #include "../retrieve_movie/retrieve_movie.h"

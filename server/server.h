@@ -3,7 +3,7 @@
 #define FIELD 256
 #define ROOMS 20
 #define LISTENQ 1024
-#define RESPONSE 20482
+#define RESPONSE 40964
 #define SA struct sockaddr
 #define stdin stdin
 

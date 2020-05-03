@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../packet.h"
+#include "../../../serializers/packet.h"
 
 void list_by_genre(FILE *fp, packet *packet, int field_size)
 {
