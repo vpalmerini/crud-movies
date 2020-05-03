@@ -17,6 +17,7 @@
 #include "functions/retrieve_movie/retrieve_movie.h"
 #include "functions/retrieve_title/retrieve_title.h"
 #include "functions/list_by_genre/list_by_genre.h"
+#include "functions/send_data/send_data.h"
 
 #include "../wrappers/socket/socket.h"
 #include "../wrappers/writen/writen.h"

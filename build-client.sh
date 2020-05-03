@@ -14,6 +14,7 @@ gcc client/functions/delete_movie/delete_movie.c -o client/functions/delete_movi
 gcc client/functions/retrieve_movie/retrieve_movie.c -o client/functions/retrieve_movie/retrieve_movie.o -c
 gcc client/functions/retrieve_title/retrieve_title.c -o client/functions/retrieve_title/retrieve_title.o -c
 gcc client/functions/list_by_genre/list_by_genre.c -o client/functions/list_by_genre/list_by_genre.o -c
+gcc client/functions/send_data/send_data.c -o client/functions/send_data/send_data.o -c
 
 gcc wrappers/socket/socket.c -o wrappers/socket/socket.o -c
 gcc wrappers/writen/writen.c -o wrappers/writen/writen.o -c
@@ -42,4 +43,5 @@ gcc -o bin/client client/client.o \
                   client/functions/delete_movie/delete_movie.o \
                   client/functions/retrieve_movie/retrieve_movie.o \
                   client/functions/retrieve_title/retrieve_title.o \
-                  client/functions/list_by_genre/list_by_genre.o
+                  client/functions/list_by_genre/list_by_genre.o \
+                  client/functions/send_data/send_data.o
