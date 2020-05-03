@@ -13,7 +13,6 @@
 #include "client.h"
 
 void send_data(int sock_fd, packet *packet, response *response, int buffer_size, int field_size, int op, int packet_size);
-unsigned char *deserialize_response(unsigned char *buffer, response *response, int packet_size, int field_size);
 ssize_t Readline(int fd, void *vptr, size_t maxlen);
 
 int main(int argc, char **argv)
@@ -133,26 +132,6 @@ void send_data(int sock_fd, packet *packet, response *response, int buffer_size,
     free(buffer);
 
     return;
-}
-
-unsigned char *deserialize_response(unsigned char *buffer, response *response, int packet_size, int field_size)
-{
-    buffer = deserialize_int(buffer, &response->n_movies);
-    printf("Nº Movies: %d\n", response->n_movies);
-
-    if (response->n_movies == 0)
-    {
-        printf("Nenhum filme encontrado\n");
-        return buffer;
-    }
-
-    int i;
-    for (i = 0; i < response->n_movies; i++)
-    {
-        buffer = deserialize_packet(buffer, &response->packets[i], field_size, packet_size);
-    }
-
-    return buffer;
 }
 
 ssize_t Readline(int fd, void *vptr, size_t maxlen)

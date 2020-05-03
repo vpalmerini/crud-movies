@@ -4,6 +4,7 @@ gcc serializers/deserialize_int/deserialize_int.c -o serializers/deserialize_int
 gcc serializers/deserialize_char/deserialize_char.c -o serializers/deserialize_char/deserialize_char.o -c
 gcc serializers/serialize_packet/serialize_packet.c -o serializers/serialize_packet/serialize_packet.o -c
 gcc serializers/deserialize_packet/deserialize_packet.c -o serializers/deserialize_packet/deserialize_packet.o -c
+gcc serializers/deserialize_response/deserialize_response.c -o serializers/deserialize_response/deserialize_response.o -c
 
 gcc client/functions/add_movie/add_movie.c -o client/functions/add_movie/add_movie.o -c
 gcc client/functions/ask_params/ask_params.c -o client/functions/ask_params/ask_params.o -c
@@ -27,6 +28,7 @@ gcc -o bin/client client/client.o \
                   serializers/deserialize_char/deserialize_char.o \
                   serializers/serialize_packet/serialize_packet.o \
                   serializers/deserialize_packet/deserialize_packet.o \
+                  serializers/deserialize_response/deserialize_response.o \
                   wrappers/socket/socket.o \
                   wrappers/writen/writen.o \
                   wrappers/inet_pton/inet_pton.o \
