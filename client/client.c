@@ -12,9 +12,8 @@
 
 #include "client.h"
 
-unsigned char *serialize_packet(unsigned char *buffer, packet *packet, int field_size);
 unsigned char *deserialize_packet(unsigned char *buffer, packet *packet, int field_size);
-void send_data(int sock_fd, packet *packet, response *response, int buffer_size, int field_size, int op);
+void send_data(int sock_fd, packet *packet, response *response, int buffer_size, int field_size, int op, int packet_size);
 unsigned char *deserialize_response(unsigned char *buffer, response *response, int packet_size, int field_size);
 ssize_t Readline(int fd, void *vptr, size_t maxlen);
 
@@ -51,24 +50,12 @@ int main(int argc, char **argv)
     while (selected_op != 0)
     {
         ask_params(stdin, selected_op, &packet, FIELD);
-        send_data(sock_fd, &packet, &response, MAXLINE, FIELD, selected_op);
+        send_data(sock_fd, &packet, &response, MAXLINE, FIELD, selected_op, MAXLINE);
         list_operations();
         selected_op = get_operation(stdin, FIELD);
     }
 
     exit(0);
-}
-
-unsigned char *serialize_packet(unsigned char *buffer, packet *packet, int field_size)
-{
-    buffer = serialize_int(buffer, packet->op);
-    buffer = serialize_int(buffer, packet->movie_id);
-    buffer = serialize_char(buffer, packet->movie_title, field_size);
-    buffer = serialize_char(buffer, packet->movie_genre, field_size);
-    buffer = serialize_char(buffer, packet->movie_sinopsis, field_size);
-    buffer = serialize_char(buffer, packet->rooms, field_size);
-
-    return buffer;
 }
 
 unsigned char *deserialize_packet(unsigned char *buffer, packet *packet, int field_size)
@@ -83,12 +70,12 @@ unsigned char *deserialize_packet(unsigned char *buffer, packet *packet, int fie
     return buffer + (MAXLINE - (8 + 4 * field_size));
 }
 
-void send_data(int sock_fd, packet *packet, response *response, int buffer_size, int field_size, int op)
+void send_data(int sock_fd, packet *packet, response *response, int buffer_size, int field_size, int op, int packet_size)
 {
     char *buffer = (char *)calloc(buffer_size, sizeof(char));
     char *resp_buffer = (char *)calloc(RESPONSE, sizeof(char));
 
-    serialize_packet(buffer, packet, field_size);
+    serialize_packet(buffer, packet, field_size, packet_size);
     Writen(sock_fd, buffer, buffer_size);
 
     if (op != 3)
