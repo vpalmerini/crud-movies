@@ -28,3 +28,4 @@
 #include "../serializers/deserialize_int/deserialize_int.h"
 #include "../serializers/deserialize_char/deserialize_char.h"
 #include "../serializers/serialize_packet/serialize_packet.h"
+#include "../serializers/deserialize_packet/deserialize_packet.h"

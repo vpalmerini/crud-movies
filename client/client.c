@@ -12,7 +12,6 @@
 
 #include "client.h"
 
-unsigned char *deserialize_packet(unsigned char *buffer, packet *packet, int field_size);
 void send_data(int sock_fd, packet *packet, response *response, int buffer_size, int field_size, int op, int packet_size);
 unsigned char *deserialize_response(unsigned char *buffer, response *response, int packet_size, int field_size);
 ssize_t Readline(int fd, void *vptr, size_t maxlen);
@@ -56,18 +55,6 @@ int main(int argc, char **argv)
     }
 
     exit(0);
-}
-
-unsigned char *deserialize_packet(unsigned char *buffer, packet *packet, int field_size)
-{
-    buffer = deserialize_int(buffer, &packet->op);
-    buffer = deserialize_int(buffer, &packet->movie_id);
-    buffer = deserialize_char(buffer, packet->movie_title, field_size);
-    buffer = deserialize_char(buffer, packet->movie_genre, field_size);
-    buffer = deserialize_char(buffer, packet->movie_sinopsis, field_size);
-    buffer = deserialize_char(buffer, packet->rooms, field_size);
-
-    return buffer + (MAXLINE - (8 + 4 * field_size));
 }
 
 void send_data(int sock_fd, packet *packet, response *response, int buffer_size, int field_size, int op, int packet_size)
@@ -162,7 +149,7 @@ unsigned char *deserialize_response(unsigned char *buffer, response *response, i
     int i;
     for (i = 0; i < response->n_movies; i++)
     {
-        buffer = deserialize_packet(buffer, &response->packets[i], field_size);
+        buffer = deserialize_packet(buffer, &response->packets[i], field_size, packet_size);
     }
 
     return buffer;
