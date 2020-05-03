@@ -22,6 +22,7 @@
 #include "../wrappers/writen/writen.h"
 #include "../wrappers/inet_pton/inet_pton.h"
 #include "../wrappers/connect/connect.h"
+#include "../wrappers/readline/readline.h"
 
 #include "../serializers/serialize_int/serialize_int.h"
 #include "../serializers/serialize_char/serialize_char.h"

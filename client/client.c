@@ -13,7 +13,6 @@
 #include "client.h"
 
 void send_data(int sock_fd, packet *packet, response *response, int buffer_size, int field_size, int op, int packet_size);
-ssize_t Readline(int fd, void *vptr, size_t maxlen);
 
 int main(int argc, char **argv)
 {
@@ -132,33 +131,4 @@ void send_data(int sock_fd, packet *packet, response *response, int buffer_size,
     free(buffer);
 
     return;
-}
-
-ssize_t Readline(int fd, void *vptr, size_t maxlen)
-{
-    ssize_t n, rc;
-    char c, *ptr;
-
-    ptr = vptr;
-    for (n = 0; n < maxlen; n++)
-    {
-    again:
-        if ((rc = read(fd, &c, 1)) == 1)
-        {
-            *ptr++ = c;
-        }
-        else if (rc == 0)
-        {
-            *ptr = 0;
-            return (n - 1);
-        }
-        else
-        {
-            if (errno == EINTR)
-                goto again;
-            return (-1);
-        }
-    }
-    *ptr = 0;
-    return (n);
 }
