@@ -17,6 +17,7 @@
 #include "functions/read_movie/read_movie.h"
 #include "functions/delete_movie/delete_movie.h"
 #include "functions/retrieve_movie/retrieve_movie.h"
+#include "functions/receive_data/receive_data.h"
 
 #include "../wrappers/socket/socket.h"
 #include "../wrappers/bind/bind.h"

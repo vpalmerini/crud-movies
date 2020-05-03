@@ -15,6 +15,7 @@ gcc server/functions/delete_movie/delete_movie.c -o server/functions/delete_movi
 gcc server/functions/retrieve_movie/retrieve_movie.c -o server/functions/retrieve_movie/retrieve_movie.o -c
 gcc server/functions/list_movies/list_movies.c -o server/functions/list_movies/list_movies.o -c
 gcc server/functions/list_movies_by_genre/list_movies_by_genre.c -o server/functions/list_movies_by_genre/list_movies_by_genre.o -c
+gcc server/functions/receive_data/receive_data.c -o server/functions/receive_data/receive_data.o -c
 
 gcc wrappers/socket/socket.c -o wrappers/socket/socket.o -c
 gcc wrappers/bind/bind.c -o wrappers/bind/bind.o -c
@@ -46,4 +47,5 @@ gcc -o bin/server server/server.o \
                   server/functions/print_packet/print_packet.o \
                   server/functions/print_response/print_response.o \
                   server/functions/list_movies/list_movies.o \
-                  server/functions/list_movies_by_genre/list_movies_by_genre.o
+                  server/functions/list_movies_by_genre/list_movies_by_genre.o \
+                  server/functions/receive_data/receive_data.o
