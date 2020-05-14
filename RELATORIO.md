@@ -122,7 +122,17 @@ Em todas as operações que retornam algum dado (todas menos a `3`), se não hou
 
 A execução do projeto consiste na execução de 2 programas: `client` e `server`. Portanto, deve-se executar cada um separadamente em uma `shell` (caso esteja num sistema operacional baseado em Unix) ou no [Git Bash](https://gitforwindows.org/) por exemplo se estiver usando Windows.
 
-> Obs: Não necessariamente os 2 programas devem ser executados na mesma máquina.
+> Obs1: Pode ser necessária a instalação do pacote _readline-devel_ (Red Hat) / _libreadline-dev_ (Debian) para a execução correta do _cliente_. Verifique se a máquina onde o cliente será executado possui este pacote. Caso contrário, execute:
+
+```
+// Red Hat
+sudo yum install readline-devel
+
+// Debian
+sudo yum install libreadline-dev
+```
+
+> Obs2: Não necessariamente os 2 programas devem ser executados na mesma máquina.
 
 É necessário que o `server` seja executado antes do `client`, pois este depende do _servidor_ já estar executando, já que o cliente precisa do endereço e porta do _servidor_ para conseguir realizar essa comunicação.
 
